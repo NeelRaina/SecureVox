@@ -15,7 +15,7 @@ sql.connect(config,function(err){
     }
 
     var request = new sql.Request();
-    request.query('Select * from tblaccounts', function(err, recordSet){
+    request.query('Select * from tbltollfree where id = 7', function(err, recordSet){
         if(err){
             console.log(err)
         }else{
