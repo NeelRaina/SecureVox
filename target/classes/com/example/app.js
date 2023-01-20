@@ -9,13 +9,17 @@ var config = {
     }
 };
 
+/*
 sql.connect(config,function(err){
     if(err){
         console.log(err);
     }
+    var user = 7;
+    var pass = 786;
 
     var request = new sql.Request();
-    request.query('Select * from tbltollfree where id = 7', function(err, recordSet){
+    var question = `Select id, password from tbltollfree where id = ${user} AND password = ${password}`;
+    request.query(question, function(err, recordSet){
         if(err){
             console.log(err)
         }else{
@@ -23,3 +27,25 @@ sql.connect(config,function(err){
         }
     });
 });
+*/
+function validateUser(username, password){
+    sql.connect(config,function(err){
+        if(err){
+            console.log(err);
+        }
+        var user = 7;
+        var pass = 786;
+    
+        var request = new sql.Request();
+        var question = `Select id, password from tbltollfree where id = ${username} AND password = ${password}`;
+        request.query(question, function(err, recordSet){
+            if(err){
+                console.log(err)
+            }else{
+                console.log(recordSet)
+            }
+        });
+    });
+}
+
+module.exports = { validateUser };

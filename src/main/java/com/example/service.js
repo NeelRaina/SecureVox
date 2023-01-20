@@ -6,6 +6,7 @@ const port = 1337;
 app.use(urlencoded({extended: false}));
 var userID;
 const VoiceResponse = require('twilio').twiml.VoiceResponse
+const sqlConn = require('./app.js');
 
 app.all('/', (request, response) => {
 
@@ -38,7 +39,9 @@ app.all('/validate', (request, response) => {
     const password = request.body.Digits;
     const twiml = new VoiceResponse();
     
-    twiml.say(`Your username is: ${userID}. Your password is ${password}. Goodbye!`);
+    twiml.say(`Your username is: ${userID}. Your password is ${password}.`);
+
+    sqlConn.validateUser(userID, password);
 
     response.type('text/xml');
     response.send(twiml.toString());
