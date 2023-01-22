@@ -42,7 +42,7 @@ app.all('/validate', (request, response) => {
     twiml.say(`Your username is: ${userID}. Your password is ${password}.`);
 
     sqlConn.validateUser(userID, password);
-
+    
     response.type('text/xml');
     response.send(twiml.toString());
 })

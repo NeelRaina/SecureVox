@@ -43,6 +43,7 @@ function validateUser(username, password){
                 console.log(err)
             }else{
                 console.log(recordSet)
+                return true;
             }
         });
     });
