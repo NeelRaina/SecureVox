@@ -42,7 +42,7 @@ function validateUser(username, password){
             if(err){
                 console.log(err)
             }else{
-                console.log(recordSet)
+                console.log("The user exists")
                 return true;
             }
         });
