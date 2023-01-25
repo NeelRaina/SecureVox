@@ -41,7 +41,10 @@ app.all('/validate', (request, response) => {
     
     twiml.say(`Your username is: ${userID}. Your password is ${password}.`);
 
-    sqlConn.validateUser(userID, password);
+    if (sqlConn.validateUser(userID, password)){
+        //read keypads
+        console.log("Read Keypad");
+    }
     
     response.type('text/xml');
     response.send(twiml.toString());
