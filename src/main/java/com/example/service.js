@@ -10,6 +10,7 @@ const sqlConn = require('./app.js');
 
 app.all('/', (request, response) => {
 
+    //Get UserID
     response.type('xml');
     const twiml = new VoiceResponse();
     const gather = twiml.gather({
@@ -22,6 +23,7 @@ app.all('/', (request, response) => {
 
 app.all('/password', (request, response) => {
 
+    //Get Password
     userID = request.body.Digits;
     const twiml = new VoiceResponse();
 
@@ -41,11 +43,14 @@ app.all('/validate', (request, response) => {
     
     twiml.say(`Your username is: ${userID}. Your password is ${password}.`);
 
-    if (sqlConn.validateUser(userID, password)){
-        //read keypads
-        console.log("Read Keypad");
-    }
-    
+    //Validate User
+   
+    isValid = sqlConn.validateUser(userID, password); 
+
+    console.log(isValid);
+
+    //Read keypads
+
     response.type('text/xml');
     response.send(twiml.toString());
 })

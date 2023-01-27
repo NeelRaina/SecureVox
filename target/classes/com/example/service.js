@@ -34,18 +34,21 @@ app.all('/password', (request, response) => {
     response.send(twiml.toString());
 })
 
-app.all('/validate', (request, response) => {
+app.all('/validate', async (request, response) => {
 
     const password = request.body.Digits;
     const twiml = new VoiceResponse();
     
     twiml.say(`Your username is: ${userID}. Your password is ${password}.`);
 
-    if (sqlConn.validateUser(userID, password)){
-        //read keypads
-        console.log("Read Keypad");
+    var isValid = false; 
+    isValid = sqlConn.validateUser(userID, password); 
+    while(isValid != true){  
+         wait;
     }
-    
+
+    console.log(isValid);
+
     response.type('text/xml');
     response.send(twiml.toString());
 })
