@@ -10,53 +10,27 @@ var config = {
     }
 };
 
-/*
-sql.connect(config,function(err){
-    if(err){
+async function validateUser(username, password){
+    console.log("Validating User...");
+    var results;
+    try{
+    var connection = await sql.connect(config)
+    console.log("Conncted");
+    results = await sql.query(`Select id, password from tbltollfree where id = ${username} AND password = ${password}`);
+    connection.close();
+
+    } catch (err){
         console.log(err);
     }
-    var user = 7;
-    var pass = 786;
+    return results;
+        
+    }
+    
 
-    var request = new sql.Request();
-    var question = `Select id, password from tbltollfree where id = ${user} AND password = ${password}`;
-    request.query(question, function(err, recordSet){
-        if(err){
-            console.log(err)
-        }else{
-            console.log(recordSet)
-        }
-    });
-});
-*/
-function validateUser(username, password){
-    console.log("Validating User...");
-    sql.connect(config,function(err){
-        if(err){
-            console.log(err);
-        }
-        var user = 7;
-        var pass = 786;
-        console.log("Connecting to user...");
-        var request = new sql.Request();
-        var question = `Select id, password from tbltollfree where id = ${username} AND password = ${password}`;
-        request.query(question, function(err, recordSet){
-            if(err){
-                console.log(err)
-            }else{
-                console.log(recordSet);
-                if(recordSet.recordset.length > 0){
-                    console.log("The user exists.")
-                    return true;
-                    
-                }else{
-                    console.log("Invalid User.")
-                    return false;
-                }
-                
-            }
-        });
-    });
-}
 
-module.exports = { validateUser };
+function test(){
+    console.log("Test")
+    return "1"
+} 
+
+module.exports = { validateUser ,test};

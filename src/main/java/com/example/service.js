@@ -6,7 +6,7 @@ const port = 1337;
 app.use(urlencoded({extended: false}));
 var userID;
 const VoiceResponse = require('twilio').twiml.VoiceResponse
-const sqlConn = require('./app.js');
+var sqlConn = require('./app.js');
 
 app.all('/', (request, response) => {
 
@@ -36,7 +36,7 @@ app.all('/password', (request, response) => {
     response.send(twiml.toString());
 })
 
-app.all('/validate', (request, response) => {
+app.all('/validate', async (request, response) => {
 
     const password = request.body.Digits;
     const twiml = new VoiceResponse();
@@ -44,12 +44,35 @@ app.all('/validate', (request, response) => {
     twiml.say(`Your username is: ${userID}. Your password is ${password}.`);
 
     //Validate User
-   
-    isValid = sqlConn.validateUser(userID, password); 
-
+    
+    var isValid = await sqlConn.validateUser(userID, password); 
+    console.log("Test");
     console.log(isValid);
 
+    //var check = sqlConn.test()
+    //console.log(check)
+
+
+
+
+
+
+
+
     //Read keypads
+    var actions = new Array;
+    //var keypadNum = new Array;
+    //gather input
+    var userInput;
+    if(userInput == 1)
+    {
+        //actions[0]
+    }else if(userInput == 2)
+    {
+         //actions[1]
+    }else if(userInput == 3){
+         //actions[2]
+    }
 
     response.type('text/xml');
     response.send(twiml.toString());
